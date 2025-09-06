@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jla</groupId>
 	<artifactId>back-end-jr</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>back-end-jr</name>
 	<description>Desafio back end jr</description>
 	<url/>
