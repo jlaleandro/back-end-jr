@@ -2,7 +2,6 @@ package com.jla.back_end_jr.repositories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jla.back_end_jr.dtos.UserDto;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Profile;
@@ -10,7 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 
 import java.io.InputStream;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -18,45 +17,38 @@ import java.util.stream.Stream;
 @Profile("mock")
 public class UsuarioRepositoryMock implements UsuarioRepository {
 
-  private final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+  private final ObjectMapper mapper;
   private List<UserDto> cache = new ArrayList<>();
+
+  public UsuarioRepositoryMock(ObjectMapper mapper) {
+    this.mapper = mapper;
+  }
 
   @PostConstruct
   void load() {
     try (InputStream in = new ClassPathResource("mock/mock-users.json").getInputStream()) {
       cache = mapper.readValue(in, new TypeReference<List<UserDto>>() {});
     } catch (Exception e) {
+      Throwable root = e;
+      while (root.getCause() != null) root = root.getCause();
+      System.err.println(">> Falha ao carregar mock-users.json (causa raiz): "
+          + root.getClass().getSimpleName() + " - " + String.valueOf(root.getMessage()));
       throw new IllegalStateException("Falha ao carregar mock-users.json", e);
     }
   }
 
-  @Override
-  public List<UserDto> findAll() {
-    return List.copyOf(cache);
-  }
+  @Override public List<UserDto> findAll() { return List.copyOf(cache); }
 
-  @Override
-  public Optional<UserDto> findById(Integer id) {
+  @Override public Optional<UserDto> findById(Integer id) {
     return cache.stream().filter(u -> Objects.equals(u.id(), id)).findFirst();
   }
 
-  @Override
-  public long count() {
-    return cache.size();
-  }
+  @Override public long count() { return cache.size(); }
 
   @Override
-  public List<UserDto> findAllFiltered(
-      Boolean isActive,
-      String role,
-      String q,
-      LocalDateTime createdFrom,
-      LocalDateTime createdTo,
-      int page,
-      int size
-  ) {
+  public List<UserDto> findAllFiltered(Boolean isActive, String role, String q,
+                                       Instant createdFrom, Instant createdTo, int page, int size) {
     Stream<UserDto> s = cache.stream();
-
     if (isActive != null) {
       s = s.filter(u -> Objects.equals(u.isActive(), isActive));
     }
@@ -77,15 +69,14 @@ public class UsuarioRepositoryMock implements UsuarioRepository {
     if (createdTo != null) {
       s = s.filter(u -> u.createdAt() != null && !u.createdAt().isAfter(createdTo));
     }
-
     s = s.sorted(Comparator.comparing(UserDto::createdAt,
          Comparator.nullsLast(Comparator.naturalOrder())).reversed());
-
     return s.skip((long) page * size).limit(size).toList();
   }
 
   @Override
-  public long countFiltered(Boolean isActive, String role, String q, LocalDateTime createdFrom, LocalDateTime createdTo) {
+  public long countFiltered(Boolean isActive, String role, String q,
+                            Instant createdFrom, Instant createdTo) {
     return findAllFiltered(isActive, role, q, createdFrom, createdTo, 0, Integer.MAX_VALUE).size();
   }
 }

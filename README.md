@@ -58,7 +58,10 @@ curl "http://localhost:8080/back_end_jr/api/usuarios?isActive=true"
 curl "http://localhost:8080/back_end_jr/api/usuarios?role=manager"
 
 # Busca textual (name/email)
+# Padrão conhecido: muita gente que consome APIs já espera um q para “full-text search”.
 curl "http://localhost:8080/back_end_jr/api/usuarios?q=bruno"
+curl "http://localhost:8080/back_end_jr/api/usuarios?q=fferraz2@contoso.dev"
+
 
 # Intervalo de datas (created_at)
 curl "http://localhost:8080/back_end_jr/api/usuarios?createdFrom=2024-05-01T00:00:00&createdTo=2024-06-01T00:00:00"

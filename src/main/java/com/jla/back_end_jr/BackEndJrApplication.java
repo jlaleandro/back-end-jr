@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BackEndJrApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(BackEndJrApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(BackEndJrApplication.class, args);
+  }
 }
