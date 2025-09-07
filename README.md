@@ -10,18 +10,7 @@ Estrutura de pacotes: `com.jla.back_end_jr` (dtos, repositories, services, contr
 
 ## Como rodar
 
-1. Garanta o profile `mock` ativo (já configurado):
-   ```yaml
-   # src/main/resources/application.yml
-   spring:
-     profiles:
-       active: mock
-   server:
-     port: 8080
-     servlet:
-       context-path: /back_end_jr
-   ```
-2. Execute a aplicação:
+1. Execute a aplicação:
    - **Maven:** `./mvnw spring-boot:run`
      ou gerar o jar
      mvn clean package
@@ -66,8 +55,8 @@ curl "http://localhost:8080/back_end_jr/api/usuarios?q=fferraz2@contoso.dev"
 # Intervalo de datas (created_at)
 curl "http://localhost:8080/back_end_jr/api/usuarios?createdFrom=2024-05-01T00:00:00&createdTo=2024-06-01T00:00:00"
 
-# Paginação
-curl "http://localhost:8080/back_end_jr/api/usuarios?page=1&size=10"
+# Paginação com formatar JSON
+curl "http://localhost:8080/back_end_jr/api/usuarios?page=1&size=10" | jq
 
 # Combinado
 curl "http://localhost:8080/back_end_jr/api/usuarios?isActive=true&role=manager&q=nogueira&page=0&size=5"
@@ -92,9 +81,3 @@ src/main/java/com/jla/back_end_jr/controllers/UsuarioController.java
 src/main/resources/application.yml
 src/main/resources/mock/mock-users.json
 ```
-
-## Observações
-
-- `UserDto.createdAt` é `LocalDateTime`. O JSON usa formato ISO com `Z`; a desserialização é feita via `JavaTimeModule`.
-- O repositório mock ordena por `createdAt` **desc** e filtra por `isActive`, `role`, `q`, `createdFrom`, `createdTo`.
-- Para trocar para JPA depois, crie uma implementação `@Profile("jpa")` que implemente `UsuarioRepository`.

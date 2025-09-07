@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jla.back_end_jr.dtos.UserDto;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
@@ -13,9 +15,17 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Stream;
 
+/**
+ * Implementação mock de UsuarioRepository.
+ * - Carrega dados de mock-users.json (classpath:mock/).
+ * - Suporta filtros e paginação simples.
+ * - Loga erros ao invés de usar System.err.
+ */
 @Repository
 @Profile("mock")
 public class UsuarioRepositoryMock implements UsuarioRepository {
+
+  private static final Logger log = LoggerFactory.getLogger(UsuarioRepositoryMock.class);
 
   private final ObjectMapper mapper;
   private List<UserDto> cache = new ArrayList<>();
@@ -31,8 +41,8 @@ public class UsuarioRepositoryMock implements UsuarioRepository {
     } catch (Exception e) {
       Throwable root = e;
       while (root.getCause() != null) root = root.getCause();
-      System.err.println(">> Falha ao carregar mock-users.json (causa raiz): "
-          + root.getClass().getSimpleName() + " - " + String.valueOf(root.getMessage()));
+      log.error("Falha ao carregar mock-users.json (causa raiz: {} - {})",
+          root.getClass().getSimpleName(), root.getMessage());
       throw new IllegalStateException("Falha ao carregar mock-users.json", e);
     }
   }

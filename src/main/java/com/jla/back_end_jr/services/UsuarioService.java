@@ -17,7 +17,7 @@ public class UsuarioService {
     this.repo = repo;
   }
 
-  public List<UserDto> listar(Boolean isActive, String role, String q,
+  public List<UserDto> buscarTodosFiltrados(Boolean isActive, String role, String q,
                               Instant createdFrom, Instant createdTo,
                               int page, int size) {
     return repo.findAllFiltered(isActive, role, q, createdFrom, createdTo, page, size);
