@@ -42,7 +42,7 @@ API simples em **Spring Boot** para **leitura de usuários** a partir de um arqu
 
      ou, mvn clean package para gerar JAR
 
-   - **Jar:** `java -jar target/back-end-jr-1.0.0.jar`
+   - **Jar:** `java -jar target/back_end_jr-1.0.0.jar`
 
 > A API ficará em: `http://localhost:8080/back_end_jr`
 
@@ -60,7 +60,7 @@ API simples em **Spring Boot** para **leitura de usuários** a partir de um arqu
 - `createdFrom` (ISO local datetime): ex. `2024-05-01T00:00:00`
 - `createdTo` (ISO local datetime): ex. `2024-06-01T00:00:00`
 - `page` (int, default 0)
-- `size` (int, default 20)
+- `page_size` (int, default 10)
 
 **Exemplos**
 
@@ -87,10 +87,10 @@ curl -i "http://localhost:8080/back_end_jr/api/usuarios?q=fferraz2@contoso.dev"
 curl -i "http://localhost:8080/back_end_jr/api/usuarios?createdFrom=2024-05-01T00:00:00&createdTo=2024-06-01T00:00:00"
 
 # Paginação
-curl -i "http://localhost:8080/back_end_jr/api/usuarios?page=1&size=10"
+curl -i "http://localhost:8080/back_end_jr/api/usuarios?page=1&page_size=10"
 
 # Combinado
-curl -i "http://localhost:8080/back_end_jr/api/usuarios?isActive=true&role=manager&q=nogueira&page=0&size=5"
+curl -i "http://localhost:8080/back_end_jr/api/usuarios?isActive=true&role=manager&q=nogueira&page=0&page_size=5"
 
 # Buscar por ID inexistente (404)
 curl -i "http://localhost:8080/api/usuarios/99999"
