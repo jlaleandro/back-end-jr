@@ -6,7 +6,13 @@ Estrutura de pacotes: `com.jla.back_end_jr` (dtos, repositories, services, contr
 ## Requisitos
 
 - Java 21+
-- (Opcional) cURL para testar
+  Você pode baixar o JDK 21 (OpenJDK) diretamente no site da Oracle, que oferece instaladores para Windows, Linux e macOS:
+  👉 Download JDK 21 - Oracle
+  Basta escolher o pacote do seu sistema operacional, instalar e depois confirmar com java -version no terminal/cmd.
+
+- cURL para testar
+  Você pode baixar o cURL para qualquer sistema operacional no site oficial: 👉 https://curl.se/download.html
+  Escolha o instalador do seu SO (Linux, macOS ou Windows); no Linux/macOS geralmente já vem instalado por padrão.
 
 ## Como rodar
 
@@ -60,6 +66,11 @@ curl "http://localhost:8080/back_end_jr/api/usuarios?page=1&size=10" | jq
 
 # Combinado
 curl "http://localhost:8080/back_end_jr/api/usuarios?isActive=true&role=manager&q=nogueira&page=0&size=5"
+
+# Buscar por ID inexistente (404)
+curl -i "http://localhost:8080/api/usuarios/99999"
+
+
 ```
 
 ### Buscar por ID
