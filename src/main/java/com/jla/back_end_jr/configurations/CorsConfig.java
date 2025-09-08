@@ -10,7 +10,7 @@ public class CorsConfig implements WebMvcConfigurer {
   public void addCorsMappings(CorsRegistry registry) {
     registry
         .addMapping("/api/usuarios/**")
-        .allowedOrigins("http://localhost:8080")
+        .allowedOrigins("https://tinuvens.ddns.net", "http://localhost:8080")
         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
         .allowedHeaders("*");
   }

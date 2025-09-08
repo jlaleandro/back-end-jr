@@ -22,13 +22,40 @@ Este desafio consiste em implementar uma **API de leitura de usuários** seguind
 
 ---
 
-API simples em **Spring Boot** para **leitura de usuários** a partir de um arquivo mock (`src/main/resources/mock/mock-users.json`).
+# 🚀 Back-end JR
+
+API simples de usuários em Spring Boot.
+
+---
+
+## 🔗 Endpoint público
+
+A API está disponível em:
+
+👉 [https://tinuvens.ddns.net/back_end_jr/api/usuarios](https://tinuvens.ddns.net/back_end_jr/api/usuarios)
+
+---
+
+## 🧪 Como testar online
+
+Você pode usar o `curl` para verificar se o endpoint está respondendo:
+
+```bash
+# Lista de usuários
+curl -i https://tinuvens.ddns.net/back_end_jr/api/usuarios
+
+# Usuário por ID (exemplo com ID 1)
+curl -i https://tinuvens.ddns.net/back_end_jr/api/usuarios/1
+
+```
+
+## 🧪 Como testar local
 
 ## Requisitos
 
 - Java 21+,
-  Para rodar este projeto é necessário ter o **Java 21 (JDK 21)** instalado.  
-  Você pode baixar no site oficial da Oracle:  
+  Para rodar este projeto é necessário ter o **Java 21 (JDK 21)** instalado.
+  Você pode baixar no site oficial da Oracle:
   👉 [Download JDK 21 - Oracle](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html?utm_source=chatgpt.com)
 
 - cURL para testar,
